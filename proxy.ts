@@ -6,6 +6,7 @@ const publicRoutes = ["/login"];
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
     const path = request.nextUrl.pathname;
+    const isPublicRoute = publicRoutes.includes(path);
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost/api/tasks/"}user`, {
@@ -20,8 +21,6 @@ export async function proxy(request: NextRequest) {
             const response = await res.json();
 
             if (response.status === 200) {
-                const isPublicRoute = publicRoutes.includes(path);
-
                 if (isPublicRoute) {
                     return NextResponse.redirect(new URL("/dashboard", request.url));
                 } else {
@@ -29,10 +28,10 @@ export async function proxy(request: NextRequest) {
                 }
             }
         } else {
-            return NextResponse.redirect(new URL("/login", request.url));
+            return isPublicRoute ? NextResponse.next() : NextResponse.redirect(new URL("/login", request.url));
         }
     } catch (error) {
-        return NextResponse.redirect(new URL("/login", request.url));
+        return isPublicRoute ? NextResponse.next() : NextResponse.redirect(new URL("/login", request.url));
     }
 }
 
