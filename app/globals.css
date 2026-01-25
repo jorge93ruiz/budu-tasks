@@ -5,6 +5,7 @@
     --foreground: #000000;
 
     --label: #000000;
+    --muted: #6b6b6b;
 
     --border: #b8b8b8;
     --border-focus: #3a3a3a;
@@ -25,6 +26,7 @@
     --color-foreground: var(--foreground);
 
     --color-label: var(--label);
+    --color-muted: var(--muted);
 
     --color-border: var(--border);
     --color-border-focus: var(--border-focus);
@@ -43,6 +45,7 @@
         --foreground: #ffffff;
 
         --label: #ffffff;
+        --muted: #9b9b9b;
 
         --border: #262626;
         --border-focus: #a8a8a8;

@@ -4,18 +4,9 @@ export interface ApiResponse {
     data?: {};
 }
 
-export interface BudgetEntryFromApi {
+export interface Task {
     id: string;
-    amount: number;
-    category: {
-        id: string;
-        title: string;
-        description: string;
-        owner_type: "own" | "shared";
-    };
-    description: string;
-    owner_type: "own" | "shared";
-    status: string;
-    transaction_date: string;
-    trasaction_type: "income" | "expense";
+    created_at: string;
+    content: string;
+    completed_at: string | null;
 }
