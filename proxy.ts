@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
 
 const protectedRoutes = ["/dashboard"];
@@ -7,32 +8,19 @@ const publicRoutes = ["/login"];
 export async function proxy(request: NextRequest) {
     const path = request.nextUrl.pathname;
     const isPublicRoute = publicRoutes.includes(path);
+    const isProtectedRoute = protectedRoutes.includes(path);
 
-    try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost/api/tasks/"}user`, {
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        });
+    const isAuthenticated = (await cookies()).get("is_authenticated")?.value;
 
-        if (res.ok) {
-            const response = await res.json();
-
-            if (response.status === 200) {
-                if (isPublicRoute) {
-                    return NextResponse.redirect(new URL("/dashboard", request.url));
-                } else {
-                    return NextResponse.next();
-                }
-            }
-        } else {
-            return isPublicRoute ? NextResponse.next() : NextResponse.redirect(new URL("/login", request.url));
-        }
-    } catch (error) {
-        return isPublicRoute ? NextResponse.next() : NextResponse.redirect(new URL("/login", request.url));
+    if (isProtectedRoute && !isAuthenticated) {
+        return NextResponse.redirect(new URL("/login", request.nextUrl));
     }
+
+    if (isPublicRoute && isAuthenticated && !request.nextUrl.pathname.startsWith("/dashboard")) {
+        return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
+    }
+
+    return NextResponse.next();
 }
 
 export const config = {
