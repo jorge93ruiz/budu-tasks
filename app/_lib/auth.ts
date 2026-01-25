@@ -17,17 +17,28 @@ export const login = async (email: string, password: string, remember: boolean) 
             remember,
         });
         return response.data;
-    } catch (error) {
-        // return (
-        //     error?.response?.data || {
-        //         success: false,
-        //         message: "An error occurred during login.",
-        //         data: {},
-        //     }
-        // );
+    } catch (error: any) {
+        return (
+            error?.response?.data || {
+                success: false,
+                message: "An error occurred during login.",
+                data: {},
+            }
+        );
     }
 };
 
 export const logout = async () => {
-    //
+    try {
+        const response = await api.post("/logout");
+        return { success: true };
+    } catch (error: any) {
+        return (
+            error.response?.data || {
+                success: false,
+                message: "An error occurred during logout.",
+                data: {},
+            }
+        );
+    }
 };
