@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "budu | Login",
+    title: "budu | Tasks | Login",
 };
 
 export default async function LoginLayout({
