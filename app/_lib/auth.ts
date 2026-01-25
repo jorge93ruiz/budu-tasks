@@ -4,7 +4,7 @@ export const getUser = async () => {
 
 export const login = async (email: string, password: string, remember: boolean) => {
     try {
-        const response = await fetch("/login", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost/api/tasks/"}login`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
