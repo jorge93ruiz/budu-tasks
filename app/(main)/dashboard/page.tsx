@@ -2,7 +2,7 @@
 
 import PageTitle from "@/app/_ui/PageTitle";
 
-export default function Dashboard() {
+export default function DashboardPage() {
     return (
         <div className="space-y-8">
             <PageTitle title="Dashboard" />

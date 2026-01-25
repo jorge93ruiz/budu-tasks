@@ -8,9 +8,8 @@ import TextInput from "@/app/_ui/TextInput";
 import Checkbox from "@/app/_ui/Checkbox";
 import PrimaryButton from "@/app/_ui/PrimaryButton";
 import SecondaryButton from "@/app/_ui/SecondaryButton";
-import PageTitle from "@/app/_ui/PageTitle";
 
-export default function Login() {
+export default function LoginPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -21,76 +20,70 @@ export default function Login() {
     });
 
     return (
-        <div>
-            <PageTitle title="Login" onlyMeta={true} />
+        <form
+            className="flex flex-col gap-4"
+            onSubmit={async (e) => {
+                e.preventDefault();
 
-            <form
-                className="flex flex-col gap-4"
-                onSubmit={async (e) => {
-                    e.preventDefault();
+                setIsLoading(true);
+                const res: ApiResponse = await login(formData.email, formData.password, formData.remember);
+                setIsLoading(false);
 
-                    setIsLoading(true);
-                    const res: ApiResponse = await login(formData.email, formData.password, formData.remember);
-                    setIsLoading(false);
+                if (res.success) {
+                    router.push("/dashboard");
+                } else {
+                    setFormData((prev) => ({
+                        ...prev,
+                        password: "",
+                    }));
 
-                    if (res.success) {
-                        router.push("/dashboard");
-                    } else {
-                        setFormData((prev) => ({
-                            ...prev,
-                            password: "",
-                        }));
-
-                        setErrorMessage(res.message || "Login failed. Please try again.");
+                    setErrorMessage(res.message || "Login failed. Please try again.");
+                }
+            }}
+        >
+            <div className="space-y-4">
+                <TextInput
+                    label="Email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    required={true}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                />
+                <TextInput
+                    label="Password"
+                    type="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    required={true}
+                    onChange={(e) =>
+                        setFormData({
+                            ...formData,
+                            password: e.target.value,
+                        })
                     }
-                }}
-            >
-                <div className="space-y-4">
-                    <TextInput
-                        label="Email"
-                        type="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        required={true}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                    <TextInput
-                        label="Password"
-                        type="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        required={true}
-                        onChange={(e) =>
-                            setFormData({
-                                ...formData,
-                                password: e.target.value,
-                            })
-                        }
-                    />
-                    <Checkbox
-                        id="remember"
-                        label="Remember me"
-                        checked={formData.remember}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setFormData({
-                                ...formData,
-                                remember: e.target.checked,
-                            })
-                        }
-                    />
-                </div>
-                <div className="flex gap-4">
-                    <PrimaryButton type="submit" className="flex-1" isLoading={isLoading}>
-                        Login
-                    </PrimaryButton>
-                    <SecondaryButton href="/" className="flex-1">
-                        Go back
-                    </SecondaryButton>
-                </div>
-                {errorMessage && (
-                    <div className="text-red-600 dark:text-red-400 text-sm text-center">{errorMessage}</div>
-                )}
-            </form>
-        </div>
+                />
+                <Checkbox
+                    id="remember"
+                    label="Remember me"
+                    checked={formData.remember}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setFormData({
+                            ...formData,
+                            remember: e.target.checked,
+                        })
+                    }
+                />
+            </div>
+            <div className="flex gap-4">
+                <PrimaryButton type="submit" className="flex-1" isLoading={isLoading}>
+                    Login
+                </PrimaryButton>
+                <SecondaryButton href="/" className="flex-1">
+                    Go back
+                </SecondaryButton>
+            </div>
+            {errorMessage && <div className="text-red-600 dark:text-red-400 text-sm text-center">{errorMessage}</div>}
+        </form>
     );
 }
