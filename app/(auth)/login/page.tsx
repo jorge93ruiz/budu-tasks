@@ -6,10 +6,10 @@ import { ApiResponse } from "@/app/_lib/types";
 import { login } from "@/app/_lib/auth";
 import TextInput from "@/app/_ui/TextInput";
 import Checkbox from "@/app/_ui/Checkbox";
-import Button from "@/app/_ui/Button";
+import PrimaryButton from "@/app/_ui/PrimaryButton";
+import SecondaryButton from "@/app/_ui/SecondaryButton";
 
 export default function Login() {
-    console.log("Login page loaded");
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -77,12 +77,12 @@ export default function Login() {
                     />
                 </div>
                 <div className="flex gap-4">
-                    <Button type="submit" hierarchy="primary" className="flex-1" isLoading={isLoading}>
+                    <PrimaryButton type="submit" className="flex-1" isLoading={isLoading}>
                         Login
-                    </Button>
-                    <Button href="/" hierarchy="secondary" className="flex-1">
+                    </PrimaryButton>
+                    <SecondaryButton href="/" className="flex-1">
                         Go back
-                    </Button>
+                    </SecondaryButton>
                 </div>
                 {errorMessage && (
                     <div className="text-red-600 dark:text-red-400 text-sm text-center">{errorMessage}</div>

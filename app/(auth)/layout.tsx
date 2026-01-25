@@ -7,7 +7,7 @@ export default async function AuthLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="grid grid-rows-[1fr_auto] items-center justify-items-center min-h-dvh font-[family-name:var(--font-geist-sans)]">
+        <div className="grid grid-rows-[1fr_auto] items-center justify-items-center min-h-dvh font-(family-name:--font-geist-sans) bg-background">
             <main className="py-4 px-8">{children}</main>
             <Footer />
         </div>
