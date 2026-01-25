@@ -1,8 +1,8 @@
-export default function PageTitle({ title }: { title: string }) {
+export default function PageTitle({ title, onlyMeta }: { title: string; onlyMeta?: boolean }) {
     return (
         <>
-            <title>{title}</title>
-            <h1 className="text-2xl font-bold">{title}</h1>
+            <title>budu | {title}</title>
+            {!onlyMeta && <h1 className="text-2xl font-bold">{title}</h1>}
         </>
     );
 }

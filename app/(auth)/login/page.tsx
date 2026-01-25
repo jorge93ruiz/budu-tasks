@@ -8,6 +8,7 @@ import TextInput from "@/app/_ui/TextInput";
 import Checkbox from "@/app/_ui/Checkbox";
 import PrimaryButton from "@/app/_ui/PrimaryButton";
 import SecondaryButton from "@/app/_ui/SecondaryButton";
+import PageTitle from "@/app/_ui/PageTitle";
 
 export default function Login() {
     const router = useRouter();
@@ -20,7 +21,9 @@ export default function Login() {
     });
 
     return (
-        <div className="">
+        <div>
+            <PageTitle title="Login" onlyMeta={true} />
+
             <form
                 className="flex flex-col gap-4"
                 onSubmit={async (e) => {
