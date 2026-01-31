@@ -1,26 +1,26 @@
 import Link from "next/link";
 
-export default function PrimaryButton({
-    children,
+export default function IconButton({
     className = "",
     isLoading = false,
+    icon,
     ...props
 }: {
-    children: React.ReactNode;
     className?: string;
     isLoading?: boolean;
+    icon: React.ReactNode;
     [key: string]: any;
 }) {
     const Component = props.href ? Link : "button";
 
     return (
         <Component
-            className={`cursor-pointer rounded-xl border border-solid transition-colors flex items-center justify-center gap-2 font-medium h-9 px-4 sm:px-5 sm:w-auto border-transparent bg-foreground text-background hover:bg-primary-hover disabled:opacity-50 ${className}`}
+            className={`cursor-pointer rounded-full border border-solid transition-colors flex items-center justify-center h-9 w-9 border-border hover:border-foreground disabled:opacity-50 ${className}`}
             {...props}
             {...(props.href && { href: props.href })}
             disabled={isLoading}
         >
-            {children}
+            {icon}
         </Component>
     );
 }

@@ -15,7 +15,7 @@ export default function SecondaryButton({
 
     return (
         <Component
-            className={`cursor-pointer rounded-xl border border-solid transition-colors flex items-center justify-center gap-2 font-medium h-9 px-4 sm:px-5 sm:w-auto border-border hover:bg-secondary-hover ${className}`}
+            className={`cursor-pointer rounded-xl border border-solid transition-colors flex items-center justify-center gap-2 font-medium h-9 px-4 sm:px-5 sm:w-auto border-border hover:bg-secondary-hover disabled:opacity-50 ${className}`}
             {...props}
             {...(props.href && { href: props.href })}
             disabled={isLoading}

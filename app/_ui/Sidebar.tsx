@@ -95,7 +95,9 @@ function Tab({ href, children, onClick }: { href: string; children: React.ReactN
             href={href}
             className={
                 "block px-4 py-2 duration-300 rounded-lg " +
-                (pathname == href ? "bg-input-hover" : "text-muted hover:text-foreground active:bg-input-hover")
+                (pathname.startsWith(href)
+                    ? "bg-input-hover"
+                    : "text-muted hover:text-foreground active:bg-input-hover")
             }
             onClick={onClick}
         >

@@ -3,8 +3,10 @@
 import api from "@/app/_lib/axios";
 import { Task } from "@/app/_lib/types";
 import Grid from "@/app/_ui/Grid";
+import IconButton from "@/app/_ui/IconButton";
 import PageTitle from "@/app/_ui/PageTitle";
 import { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 
 export default function TasksPage() {
     const [limit, setLimit] = useState(0);
@@ -40,7 +42,10 @@ export default function TasksPage() {
 
     return (
         <div className="space-y-8">
-            <PageTitle title="Tasks" />
+            <div className="flex gap-4 items-center">
+                <PageTitle title="Tasks" />
+                <IconButton icon={<FaPlus />} href="/tasks/new" />
+            </div>
 
             <Grid>
                 {tasks.length > 0 ? (
