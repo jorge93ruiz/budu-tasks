@@ -10,3 +10,9 @@ export interface Task {
     content: string;
     completed_at: string | null;
 }
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+}
