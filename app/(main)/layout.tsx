@@ -11,7 +11,7 @@ export default function MainLayout({
     const { mounted, loggedInUser } = useMounted();
 
     return mounted ? (
-        <main className="grid grid-cols-[auto_1fr] font-(family-name:--font-geist-sans)">
+        <main className="grid lg:grid-cols-[auto_1fr] font-(family-name:--font-geist-sans)">
             <FullSidebar className="hidden lg:block" />
             <CollapsibleSidebar className="block lg:hidden" />
             <section className="grid grid-rows-[1fr_auto] min-h-dvh">
