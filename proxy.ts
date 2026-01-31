@@ -1,20 +1,14 @@
 import { NextResponse, NextRequest } from "next/server";
 
-const protectedRoutes = ["/dashboard", "/tasks"];
-const publicRoutes = ["/login"];
-
-// This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
-    const path = request.nextUrl.pathname;
-    const isPublicRoute = publicRoutes.includes(path);
-    const isProtectedRoute = protectedRoutes.includes(path);
+    const isLoginRoute = request.nextUrl.pathname === "/login";
     const isAuth = request.cookies.get("is_authenticated");
 
-    if (isProtectedRoute && !isAuth) {
+    if (!isLoginRoute && !isAuth) {
         return NextResponse.redirect(new URL("/login", request.nextUrl));
     }
 
-    if (isPublicRoute && isAuth && !request.nextUrl.pathname.startsWith("/dashboard")) {
+    if (isLoginRoute && isAuth) {
         return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
     }
 
