@@ -11,15 +11,10 @@ const ROUTES = [
 ];
 
 function FullSidebar({ className = "" }: { className?: string }) {
-    const router = useRouter();
-
     return (
         <aside className={"border-r border-border " + className}>
             <div className="sticky top-0 h-dvh grid grid-rows-[auto_1fr_auto] space-y-2 py-8 min-w-xs">
-                <div className="px-8 sm:px-12 py-2">
-                    <div className="text-xs leading-0 text-muted">budu</div>
-                    <div className="font-bold tracking-wider text-2xl">tasks</div>
-                </div>
+                <SidebarLogo />
 
                 <div className="space-y-2 overflow-y-auto px-4 sm:px-8">
                     {ROUTES.map((route) => (
@@ -30,21 +25,7 @@ function FullSidebar({ className = "" }: { className?: string }) {
                 </div>
 
                 <div className="px-4 sm:px-8">
-                    <button
-                        type="button"
-                        className="w-full text-start cursor-pointer block px-4 py-2 duration-300 rounded-lg text-muted hover:text-foreground active:bg-input-hover"
-                        onClick={async () => {
-                            const res: ApiResponse = await logout();
-
-                            if (res.success) {
-                                router.push("/login");
-                            } else {
-                                console.error("Logout failed:", res.message);
-                            }
-                        }}
-                    >
-                        Logout
-                    </button>
+                    <LogoutButton />
                 </div>
             </div>
         </aside>
@@ -52,7 +33,6 @@ function FullSidebar({ className = "" }: { className?: string }) {
 }
 
 function CollapsibleSidebar({ className = "" }: { className?: string }) {
-    const router = useRouter();
     const [open, setOpen] = useState(false);
 
     return (
@@ -88,10 +68,7 @@ function CollapsibleSidebar({ className = "" }: { className?: string }) {
                 }
             >
                 <div className="top-0 h-dvh grid grid-rows-[auto_1fr_auto] space-y-2 py-8 min-w-xs">
-                    <div className="px-8 sm:px-12 py-2">
-                        <div className="text-xs leading-0 text-muted">budu</div>
-                        <div className="font-bold tracking-wider text-2xl">tasks</div>
-                    </div>
+                    <SidebarLogo />
 
                     <div className="space-y-2 overflow-y-auto px-4 sm:px-8">
                         {ROUTES.map((route) => (
@@ -102,22 +79,7 @@ function CollapsibleSidebar({ className = "" }: { className?: string }) {
                     </div>
 
                     <div className="px-4 sm:px-8">
-                        <button
-                            type="button"
-                            className="w-full text-start cursor-pointer block px-4 py-2 duration-300 rounded-lg text-muted hover:text-foreground active:bg-input-hover"
-                            onClick={async () => {
-                                setOpen(false);
-                                const res: ApiResponse = await logout();
-
-                                if (res.success) {
-                                    router.push("/login");
-                                } else {
-                                    console.error("Logout failed:", res.message);
-                                }
-                            }}
-                        >
-                            Logout
-                        </button>
+                        <LogoutButton onClick={() => setOpen(false)} />
                     </div>
                 </div>
             </aside>
@@ -125,7 +87,7 @@ function CollapsibleSidebar({ className = "" }: { className?: string }) {
     );
 }
 
-const Tab = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => {
+function Tab({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
     const pathname = usePathname();
 
     return (
@@ -140,6 +102,39 @@ const Tab = ({ href, children, onClick }: { href: string; children: React.ReactN
             {children}
         </Link>
     );
-};
+}
+
+function SidebarLogo() {
+    return (
+        <div className="px-8 sm:px-12 py-2">
+            <div className="text-xs leading-0 text-muted">budu</div>
+            <div className="font-bold tracking-wider text-2xl">tasks</div>
+        </div>
+    );
+}
+
+function LogoutButton({ onClick }: { onClick?: () => void }) {
+    const router = useRouter();
+
+    return (
+        <button
+            type="button"
+            className="w-full text-start cursor-pointer block px-4 py-2 duration-300 rounded-lg text-muted hover:text-foreground active:bg-input-hover"
+            onClick={async () => {
+                if (onClick) onClick();
+
+                const res: ApiResponse = await logout();
+
+                if (res.success) {
+                    router.push("/login");
+                } else {
+                    console.error("Logout failed:", res.message);
+                }
+            }}
+        >
+            Logout
+        </button>
+    );
+}
 
 export { FullSidebar, CollapsibleSidebar };
