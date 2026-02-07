@@ -1,14 +1,8 @@
-import InputError from "./InputError";
-
-export default function TextInput({
+export default function DateInput({
     label,
-    type = "text",
-    error = "",
     ...props
 }: {
     label: string;
-    type?: string;
-    error?: string | string[];
 } & React.InputHTMLAttributes<HTMLInputElement>) {
     return (
         <div className="flex flex-col gap-2">
@@ -16,11 +10,10 @@ export default function TextInput({
                 {label}
             </label>
             <input
-                type={type}
+                type="date"
                 className="border rounded-xl focus:outline-none focus:ring-4 focus:ring-ring-focus border-border focus:border-border-focus hover:bg-input-hover px-4 py-3 h-9"
                 {...props}
             />
-            <InputError message={error} />
         </div>
     );
 }

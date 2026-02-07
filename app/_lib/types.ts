@@ -7,7 +7,9 @@ export interface ApiResponse {
 export interface Task {
     id: string;
     created_at: string;
+    title: string | null;
     content: string;
+    due_date: string | null;
     completed_at: string | null;
 }
 

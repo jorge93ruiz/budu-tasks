@@ -3,6 +3,7 @@
 :root {
     --background: #ffffff;
     --foreground: #000000;
+    --danger: #e76f6f;
 
     --label: #000000;
     --muted: #6b6b6b;
@@ -26,6 +27,7 @@
 
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+    --color-danger: var(--danger);
 
     --color-label: var(--label);
     --color-muted: var(--muted);
@@ -47,6 +49,7 @@
     :root {
         --background: #000000;
         --foreground: #ffffff;
+        --danger: #ee7979;
 
         --label: #ffffff;
         --muted: #9b9b9b;
