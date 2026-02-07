@@ -1,26 +1,26 @@
 import Link from "next/link";
 
-export default function IconButton({
+export default function TextButton({
     className = "",
     isLoading = false,
-    icon,
+    children,
     ...props
 }: {
     className?: string;
     isLoading?: boolean;
-    icon: React.ReactNode;
+    children: React.ReactNode;
     [key: string]: any;
 }) {
     const Component = props.href ? Link : "button";
 
     return (
         <Component
-            className={`cursor-pointer rounded-full border border-solid transition-colors flex items-center justify-center h-7 w-7 border-border hover:border-foreground disabled:opacity-50 ${className}`}
+            className={`cursor-pointer transition-colors text-muted hover:text-foreground disabled:opacity-50 ${className}`}
             {...props}
             {...(props.href && { href: props.href })}
             disabled={isLoading}
         >
-            {icon}
+            {children}
         </Component>
     );
 }

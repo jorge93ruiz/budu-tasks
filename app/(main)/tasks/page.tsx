@@ -2,11 +2,12 @@
 
 import api from "@/app/_lib/axios";
 import { Task } from "@/app/_lib/types";
-import Grid from "@/app/_ui/Grid";
 import IconButton from "@/app/_ui/IconButton";
 import PageTitle from "@/app/_ui/PageTitle";
+import TextButton from "@/app/_ui/TextButton";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPen, FaPlus } from "react-icons/fa";
 
 export default function TasksPage() {
     const [limit, setLimit] = useState(0);
@@ -44,35 +45,41 @@ export default function TasksPage() {
         <div className="space-y-8">
             <div className="flex gap-4 items-center">
                 <PageTitle title="Tasks" />
-                <IconButton icon={<FaPlus />} href="/tasks/new" />
+                <IconButton icon={<FaPlus className="w-3 h-3" />} href="/tasks/create" />
             </div>
 
-            <Grid>
-                {tasks.length > 0 ? (
-                    <ul className="space-y-4">
-                        <h2 className="font-semibold">Tasks</h2>
-
-                        {tasks.map((task: Task) => (
-                            <div key={task.id}>{task.content}</div>
-                        ))}
-
-                        {totalTasks > tasks.length && totalTasks > skip + limit && (
-                            <div className="text-end">
-                                <button
-                                    className="text-foreground/50 hover:text-foreground"
-                                    onClick={() => {
-                                        fetchTasks(limit, skip + limit);
-                                    }}
-                                >
-                                    Load more
-                                </button>
+            {tasks.length > 0 ? (
+                <ul className="space-y-4">
+                    {tasks.map((task: Task) => (
+                        <div
+                            key={task.id}
+                            className="p-4 border border-border rounded-xl flex gap-4 justify-between hover:bg-card-hover"
+                        >
+                            <span>{task.content}</span>
+                            <div className="flex gap-4">
+                                <span className="text-muted">
+                                    {format(task.created_at, "EEEE d MMMM yyyy, h:mm a")}
+                                </span>
+                                <IconButton icon={<FaPen className="w-3 h-3" />} href={`/tasks/${task.id}/edit`} />
                             </div>
-                        )}
-                    </ul>
-                ) : (
-                    <p className="text-muted">No tasks entries found.</p>
-                )}
-            </Grid>
+                        </div>
+                    ))}
+
+                    {totalTasks > tasks.length && totalTasks > skip + limit && (
+                        <div className="text-end">
+                            <TextButton
+                                onClick={() => {
+                                    fetchTasks(limit, skip + limit);
+                                }}
+                            >
+                                Load more
+                            </TextButton>
+                        </div>
+                    )}
+                </ul>
+            ) : (
+                <p className="text-muted">No tasks entries found.</p>
+            )}
         </div>
     );
 }

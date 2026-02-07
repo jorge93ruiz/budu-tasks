@@ -3,6 +3,7 @@
 import api from "@/app/_lib/axios";
 import PageTitle from "@/app/_ui/PageTitle";
 import PrimaryButton from "@/app/_ui/PrimaryButton";
+import SecondaryButton from "@/app/_ui/SecondaryButton";
 import TextareaInput from "@/app/_ui/TextareaInput";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
@@ -46,9 +47,14 @@ export default function TasksNewPage() {
                     rows={5}
                 />
 
-                <PrimaryButton type="submit" className="flex-1" isLoading={isLoading}>
-                    Create Task
-                </PrimaryButton>
+                <div className="flex gap-4 justify-between">
+                    <SecondaryButton type="button" className="flex-1" onClick={() => router.back()}>
+                        Back
+                    </SecondaryButton>
+                    <PrimaryButton type="submit" className="flex-1" isLoading={isLoading}>
+                        Create Task
+                    </PrimaryButton>
+                </div>
             </form>
         </div>
     );

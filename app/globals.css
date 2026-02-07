@@ -12,6 +12,8 @@
 
     --ring-focus: #e4e4e4;
 
+    --card-hover: #e7e6e6;
+
     --input-hover: #f5f4f4;
 
     --primary-hover: #3a3a3a;
@@ -33,6 +35,8 @@
 
     --color-ring-focus: var(--ring-focus);
 
+    --color-card-hover: var(--card-hover);
+
     --color-input-hover: var(--input-hover);
 
     --color-primary-hover: var(--primary-hover);
@@ -51,6 +55,8 @@
         --border-focus: #a8a8a8;
 
         --ring-focus: #262626;
+
+        --card-hover: #0f0f0f;
 
         --input-hover: #171717;
 

@@ -12,7 +12,7 @@ const ROUTES = [
 
 function FullSidebar({ className = "" }: { className?: string }) {
     return (
-        <aside className={"border-r border-border " + className}>
+        <aside className={className}>
             <div className="sticky top-0 h-dvh grid grid-rows-[auto_1fr_auto] space-y-2 py-8 min-w-xs">
                 <SidebarLogo />
 
